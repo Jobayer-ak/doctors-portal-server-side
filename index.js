@@ -80,6 +80,7 @@ async function run() {
       res.send({ admin: isAdmin });
     });
 
+    // make admin
     app.put("/user/admin/:email", verifyJWT, verifyAdmin, async (req, res) => {
       const email = req.params.email;
       const filter = { email: email };
@@ -183,7 +184,8 @@ async function run() {
 
     // manage doctor
     app.get("/doctor", verifyJWT, verifyAdmin, async (req, res) => {
-      const doctors = doctorCollection.find().toArray();
+      const doctors = await doctorCollection.find().toArray();
+      console.log(doctors);
       res.send(doctors);
     });
 
